@@ -1,0 +1,299 @@
+/* 全体の共通設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+/* ==========================================
+   ★オープニング画面の設定
+========================================== */
+.opening-screen {
+    position: fixed;   /* 画面に固定して、スクロールしても動かないようにする */
+    top: 0;
+    left: 0;
+    width: 100vw;      /* 画面の横幅100% */
+    height: 100vh;     /* 画面の縦幅100%（全画面） */
+    background-color: #000000; /* 背景を黒にして、半透明の画像を引き締める */
+    z-index: 9999;     /* 一番手前に表示させるための数字（最前面） */
+    
+    /* 文字や画像を真ん中に配置 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* アニメーションの指示：
+       3秒かけて fadeout という動きを実行し、終わったらその状態をキープ（forwards） */
+    animation: fadeout 2.5s ease-in-out forwards;
+}
+
+/* オープニングの画像（半透明にする） */
+.opening-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5; /* ★ここで画像の半透明度を調整（0.5 = 50%透明） */
+}
+
+/* オープニングの文字 */
+.opening-text {
+    position: relative; /* 画像より前に文字を出すため */
+    color: #f179bf;
+    font-size: 2rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+}
+
+/* ==========================================
+   ★「スッと消える」アニメーションの定義
+========================================== */
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    80% {
+        opacity: 1; /* 最初の7割の時間（約2秒間）はしっかり表示しておく */
+    }
+    99% {
+        opacity: 0;
+        visibility: visible; /* スッと消えていく最中 */
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden; /* ★完全に消えたら、後ろのホーム画面を触れるように非表示にする */
+    }
+}
+
+/* ==========================================
+   本来のホーム画面（共通設定）
+========================================== */
+/* リンクを押したときに「スル〜ッ」と滑らかにスクロールさせる設定 */
+html {
+    scroll-behavior: smooth;
+}
+
+.home-content {
+    /* オープニングが消えた後に見合わなくなるのを防ぐため、少し余白をあける */
+    padding-top: 70px; 
+}
+
+/* ★青から変更したピンクの帯（ナビゲーションバー）のスタイリング */
+.main-header {
+    position: fixed;      /* 画面の上部に常に固定する */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ff69b4; /* ★あなたの指定したピンク色 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 帯の下にうっすら影をつけて立体的に */
+    z-index: 100;         /* オープニング(9999)よりは下、メイン画面よりは上に配置 */
+    
+    /* ロゴとメニューを「左右の端」に振り分ける設定 */
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; /* 上下の中央に揃える */
+    padding: 15px 30px;     /* 帯の左右に少し余白を作る */
+    box-sizing: border-box; /* パディングを含めて横幅100%にする */
+}
+
+/* ロゴ画像エリアのスタイリング */
+.header-logo a {
+    display: flex;       /* 画像と文字を横並びにする */
+    align-items: center; /* 上下の中央で高さを揃える */
+    gap: 12px;           /* 画像と文字の間の隙間 */
+    text-decoration: none; /* 文字の下線を消す */
+}
+
+.logo-img {
+    height: 40px;       /* 帯の太さに合わせて画像の高さを制限 */
+    width: auto;        /* 高さに合わせて横幅は自動調整 */
+    display: block;
+}
+
+/* ロゴの隣の文字のスタイリング */
+.logo-words {
+    color: #ffffff;       /* 文字色を白に */
+    font-size: 1.2rem;    /* 文字の大きさ */
+    font-weight: bold;    /* 太字にする */
+    white-space: nowrap;  /* スマホ画面でも文字が途中で改行されないようにする */
+}
+
+/* ------------------------------------------
+   PC用のメニュー表示（画面が広いとき）
+------------------------------------------ */
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 30px;       /* 項目と項目の間の隙間 */
+}
+
+/* メニューの文字（リンク）のデザイン */
+.nav-links a {
+    color: #ffffff;       /* 文字色を白に */
+    text-decoration: none; /* 下線を消す */
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s; /* マウスを乗せたときのアニメーションを滑らかに */
+}
+
+/* マウスを乗せた（ホバーした）ときに色を変える演出 */
+.nav-links a:hover {
+    color: #000000; /* ピンクに映えるパステルイエロー */
+}
+
+/* ★PCの時は、スマホ用の三本線ボタンを「非表示」にしておく */
+.menu-toggle {
+    display: none;
+}
+
+/* 各セクション（中身）の見栄えを整えるための余白 */
+.content-section {
+    padding: 100px 20px; 
+    min-height: 500px;  
+    border-bottom: 1px solid #eee; 
+}
+
+
+/* ==========================================
+   ★ここから追加：スマホ画面（横幅768px以下）の時の上書き設定
+========================================== */
+@media screen and (max-width: 768px) {
+    
+    /* 1. PC用のままだと消えている「三本線ボタン」を表示・デザインする */
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 110; /* メニューの背景より手前に出す */
+    }
+
+    /* 3本の「線」自体のデザイン（ここで3本の白い棒を作っています） */
+    .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: #ffffff; /* 白い線 */
+        border-radius: 2px;
+        transition: all 0.3s;
+    }
+
+    /* 2. メニュー全体の箱を「画面の上の外側」に隠す設定に変身させる */
+    #nav-menu {
+        position: fixed;
+        top: -100%; /* 最初は画面の上の外側（見えない場所）に隠しておく */
+        left: 0;
+        width: 100%;
+        background-color: #ff69b4; /* ほんのり透けるピンク */
+        padding: 90px 0 30px 0; /* 上部にボタンと被らないための余白 */
+        transition: top 0.4s ease; /* スッと降りてくるアニメーション */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* 3. ボタンが押されて「active」という目印がついたら、画面内に引きずり下ろす */
+    #nav-menu.active {
+        top: 0; /* 隠れていたメニューが上から降りてくる */
+    }
+
+    /* 4. スマホメニュー内のリンクを、横並びから「縦並び」に変更する */
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem; /* スマホで押しやすいように少し大きく */
+    }
+}
+    /* ==========================================
+   ★追加：フッター（ページ最下部の目次）
+========================================== */
+.main-footer {
+    background-color: #333333; /* 画面が引き締まるように、シックなダークグレーに */
+    color: #ffffff;            /* 文字色は白 */
+    padding: 40px 20px 20px 20px;
+    margin-top: 50px;          /* 上のコンテンツとの間に隙間を作る */
+}
+
+/* フッターの中身をパソコンでは横並び、スマホでは縦並びにする */
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;            /* 画面の中央に寄せる */
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;           /* 画面が狭いときは自動で折り返す */
+}
+
+/* 左側の紹介文エリア */
+.footer-info h3 {
+    margin: 0 0 10px 0;
+    color: #ff69b4;            /* ★ここもお揃いのピンクにして統一感を出します */
+    font-size: 1.4rem;
+}
+
+.footer-info p {
+    margin: 0;
+    color: #cccccc;            /* 少し薄いグレーにして読みやすく */
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* 右側の目次エリア */
+.footer-nav h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #ff69b4; /* ★目次の見出しの下にピンクの線を引く */
+    padding-bottom: 5px;
+}
+
+.footer-nav ul {
+    list-style: none;          /* ドット（点）を消す */
+    padding: 0;
+    margin: 0;
+}
+
+.footer-nav li {
+    margin-bottom: 10px;       /* 上下のリンクの隙間 */
+}
+
+.footer-nav a {
+    color: #ffffff;
+    text-decoration: none;     /* 下線を消す */
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+/* フッターの目次にマウスを乗せたときの変化 */
+.footer-nav a:hover {
+    color: #ff69b4;            /* ★マウスを乗せるとピンクに変わる */
+    text-decoration: underline; /* リンクだと分かりやすいように下線を出す */
+}
+
+/* コピーライト（一番下の1行） */
+.footer-copy {
+    text-align: center;        /* 真ん中寄せ */
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #444444; /* 細い区切り線 */
+    color: #888888;            /* 文字を薄く */
+    font-size: 0.8rem;
+}
+
+/* スマホ画面のときは、フッターの目次を左寄せにする微調整 */
+@media screen and (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* 縦並びにする */
+        gap: 30px;
+    }
+}
