@@ -12,6 +12,17 @@ body {
     background-attachment: fixed;
 }
 
+@media screen and (max-width: 768px) {
+    body {
+        /* スマホのときは画像を拡大しすぎず、画像全体を収める */
+        background-size: contain; 
+        /* 画像が繰り返されてしまう場合は repeat を no-repeat に、
+           余白の色を統一したい場合は background-color を設定できます */
+        background-repeat: repeat; 
+        background-attachment: scroll; /* スマホで固定するとバグることがあるため解除 */
+    }
+}
+
 /* ==========================================
    ★オープニング画面の設定
 ========================================== */
